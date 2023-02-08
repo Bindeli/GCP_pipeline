@@ -1,0 +1,52 @@
+name: 'Terraform CI'
+
+on: #tipo de limitação que botamos aqui
+  push: # só vai triggar o pipeline quando eu fazer um push nessa branch
+    branches:
+    - main
+    paths:
+      - '**.tf' # Quando os arquivos tiverem essa extenção
+  pull_request:
+
+jobs: # fazer um job para que funcione para um tipo de arquivo
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest # vamos rodar em uma máquina ubuntu
+
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+
+      # pegar a ultima a versão do repositório
+    - name: Checkout
+      uses: actions/checkout@v2
+
+      # a imagem onde ele vai rodar
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+      # iniciando uma sessão do terraform
+    - name: Terraform Init
+      run: terraform init
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+    # analisando o que o terraform vai construir
+    - name: Terraform Plan
+      run: terraform plan -lock=false
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+    # para executar somente o push no main
+    - name: Terraform Apply
+      if: github.red == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve # confirmando que você vai criar 
+      # ele sozinho vai criar
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+
+
