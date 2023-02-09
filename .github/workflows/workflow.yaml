@@ -6,7 +6,7 @@ on: #tipo de limitação que botamos aqui
     - main
     paths:
       - '**.tf'
-      - '**.tfvars' # Quando os arquivos tiverem essa extenção
+      - '**.tfva' # Quando os arquivos tiverem essa extenção
   pull_request:
 
 jobs: # fazer um job para que funcione para um tipo de arquivo
@@ -44,8 +44,7 @@ jobs: # fazer um job para que funcione para um tipo de arquivo
     # para executar somente o push no main
     - name: Terraform Apply
       if: github.red == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve # confirmando que você vai criar 
-      # ele sozinho vai criar
+      run: terraform apply -auto-approve # confirmando que você vai criar  # ele sozinho vai criar
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
