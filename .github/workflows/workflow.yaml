@@ -5,7 +5,8 @@ on: #tipo de limitação que botamos aqui
     branches:
     - main
     paths:
-      - '**.tf' # Quando os arquivos tiverem essa extenção
+      - '**.tf'
+      - '**.tfvars' # Quando os arquivos tiverem essa extenção
   pull_request:
 
 jobs: # fazer um job para que funcione para um tipo de arquivo

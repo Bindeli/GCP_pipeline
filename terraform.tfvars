@@ -1,3 +1,3 @@
-project_id = "stack-data-pipeline01"
+project_id = "stack-state-gcs-data-pipeline2204"
 
 region = "us-central1"
