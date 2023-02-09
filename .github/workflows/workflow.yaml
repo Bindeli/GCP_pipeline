@@ -6,7 +6,7 @@ on: #tipo de limitação que botamos aqui
     - main
     paths:
       - '**.tf'
-      - '**.tfva' # Quando os arquivos tiverem essa extenção
+      - '**.tfvars' # Quando os arquivos tiverem essa extenção
   pull_request:
 
 jobs: # fazer um job para que funcione para um tipo de arquivo
@@ -14,7 +14,8 @@ jobs: # fazer um job para que funcione para um tipo de arquivo
     name: 'Terraform'
     runs-on: ubuntu-latest # vamos rodar em uma máquina ubuntu
 
-
+    # Use the Bash shell regardless whether the GitHub Actions runner 
+    # is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
@@ -22,31 +23,38 @@ jobs: # fazer um job para que funcione para um tipo de arquivo
     steps:
 
       # pegar a ultima a versão do repositório
+      # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
 
       # a imagem onde ele vai rodar
+      # Install the latest version of Terraform CLI and configure 
+      # the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
 
       # iniciando uma sessão do terraform
+      # Install the latest version of Terraform CLI and configure 
+      # the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Terraform Init
       run: terraform init
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
     # analisando o que o terraform vai construir
+    # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -lock=false
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-    # para executar somente o push no main
+    # On push to main, build or change infrastructure according to Terraform configuration files
+      # Note: It is recommended to set up a required "strict" status check in your repository for 
+      # "Terraform Cloud". See the documentation on "strict" required status checks for more 
+      # information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
-      if: github.red == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve # confirmando que você vai criar  # ele sozinho vai criar
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-
-
 
