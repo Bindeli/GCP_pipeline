@@ -1,4 +1,4 @@
-resource "google_storage_bucket" "gcs_bucket" {
+resource "google_storage_bucket"{
     name = "stack-state-gcs-data-pipeline2204"
     location = var.region
 }
