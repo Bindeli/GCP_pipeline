@@ -1,6 +1,8 @@
+# qual providers de cloud que vamos utilizar
+
 provider "google"{
-    project = var.project_id
-    region = var.region
+  project = var.project_id
+  region = var.region
 }
 
 terraform {

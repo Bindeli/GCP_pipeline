@@ -3,9 +3,9 @@ name: 'Terraform CI'
 on: #tipo de limitação que botamos aqui
   push: # só vai triggar o pipeline quando eu fazer um push nessa branch
     branches:
-    - main
+    - main # vai triggar quando eu fizer no main
     paths:
-      - '**.tf'
+      - '**.tf' # Quando os arquivos tiverem essa extenção
       - '**.tfvars' # Quando os arquivos tiverem essa extenção
   pull_request:
 
