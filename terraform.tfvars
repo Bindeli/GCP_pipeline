@@ -1,5 +1,5 @@
 # onde atribuimos os valores a estas variaveis do variables.tf
 
-project_id = "stack-state-gcs-data-pipeline2204"
+project_id = "datapipeline01"
 
 region = "us-central1"
