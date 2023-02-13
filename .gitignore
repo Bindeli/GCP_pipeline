@@ -13,4 +13,7 @@
 
 venv/*
 
-licenca.py
+licenca/*
+
+
+requirements.txt
