@@ -42,25 +42,6 @@ def get_dados(remote_url):
 
     return response
 
-# essa função vai precisar da rota
-# que irá fazer o download dos dados
-
-@app.post("/download_combustivel")
-async def download_cumbustivel(params: Params):
-    try:
-
-        data = get_dados(params.url)
-        
-        put_file_to_gcs(
-            bucket_name=params.bucket_name,
-            output_file=params.output_file_prefix,
-            content=data.content
-        )
-
-        return {"Status": "OK", "Bucket_name": params.bucket_name, "url": params.url}
-    except Exception as ex:
-        raise HTTPException(status_code=ex.code, detail=f"{ex}")
-
 # uma função que envie o arquivo recem obtido para nosso bucket raw
 # e para isso vamos pegar a função da google que eles fizeram
 # só pesquisar por put file in gcs python
@@ -80,6 +61,27 @@ def put_file_to_gcs(output_file: str, bucket_name: str, content):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8080)
+
+
+# essa função vai precisar da rota
+# que irá fazer o download dos dados
+@app.post("/download_combustivel")
+async def download_cumbustivel(params: Params):
+    try:
+
+        data = get_dados(params.url)
+        
+        put_file_to_gcs(
+            bucket_name=params.bucket_name,
+            output_file=params.output_file_prefix,
+            content=data.content
+        )
+
+        return {"Status": "OK", "Bucket_name": params.bucket_name, "url": params.url}
+    except Exception as ex:
+        raise HTTPException(status_code=ex.code, detail=f"{ex}")
+
+
 
 
 

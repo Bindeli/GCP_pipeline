@@ -57,4 +57,5 @@ jobs: # fazer um job para que funcione para um tipo de arquivo
       run: terraform apply -auto-approve
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        
 
