@@ -2,11 +2,12 @@ from fastapi import FastAPI, HTTPException
 import requests
 from google.cloud import storage
 from pydantic import BaseModel
-import uvicorn
+import uvicorn # servidor utilizável
 
 
 app = FastAPI()
 
+# from pydantic import BaseModel
 class Params(BaseModel):
     url : str
     bucket_name : str
@@ -16,6 +17,7 @@ class Params(BaseModel):
 # agora vamos começar a criar as rotas
 # API funciona baseado em métodos 
 
+# só uma mensagem para avisar que está ativo
 @app.get('/') # nesse rota de home
 async def read_root():
     return {"Hello" : "World"}
@@ -32,6 +34,8 @@ precisa bater nesse site em cada um desses arquivos contendo uma url padrão
 
 # vai fazer um get da url que vamos passar:
 
+# onde fazemos o download dos dados
+# biblioteca request
 def get_dados(remote_url):
     response = requests.get(remote_url)
 
@@ -62,6 +66,7 @@ async def download_cumbustivel(params: Params):
 # só pesquisar por put file in gcs python
 # https://cloud.google.com/storage/docs/samples/storage-upload-file?hl=pt-br#storage_upload_file-python
 
+# que envia os dados para cloud storage
 def put_file_to_gcs(output_file: str, bucket_name: str, content):
     try:
         storage_client = storage.Client()
