@@ -60,7 +60,7 @@ def put_file_to_gcs(output_file: str, bucket_name: str, content):
         print(ex)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8080)
+    uvicorn.run(app, host="0.0.0.0", port=8080)
 
 
 # essa função vai precisar da rota
