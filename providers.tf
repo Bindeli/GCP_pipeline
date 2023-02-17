@@ -6,7 +6,7 @@ provider "google"{
 }
 
 terraform {
-  backend "gcs"{
+  backend "gcs"{ # fala que vai ser salvo no gcstorage
     bucket = "bucket_lucas2204"
     prefix = "terraform/state"
   }
