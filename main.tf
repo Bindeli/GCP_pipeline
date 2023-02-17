@@ -32,6 +32,25 @@ module "bigquery-dataset-gasolina" {
   ]
   tables=[
     {
+        table_id           = "tb_historico_combustivel_brasil",
+        description        = "Tabela com as informacoes de preço do combustível ao longo dos anos"
+        time_partitioning  = {
+          type                     = "DAY",
+          field                    = "data",
+          require_partition_filter = false,
+          expiration_ms            = null
+        },
+        range_partitioning = null,
+        expiration_time = null,
+        clustering      = ["produto","regiao_sigla", "estado_sigla"],
+        labels          = {
+          name    = "stack_data_pipeline"
+          project  = "gasolina"
+        },
+        deletion_protection = true
+        schema = file("./bigquery/schema/gasolina_brasil/tb_historico_combustivel_brasil.json")
+    },
+    {
         table_id           = "tb_historico_combustivel_brasil2",
         description        = "Tabela com as informacoes de preço do combustível ao longo dos anos"
         time_partitioning  = {
