@@ -59,14 +59,10 @@ def put_file_to_gcs(output_file: str, bucket_name: str, content):
     except Exception as ex:
         print(ex)
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8080)
-
-
 # essa função vai precisar da rota
 # que irá fazer o download dos dados
 @app.post("/download_combustivel")
-async def download_cumbustivel(params: Params):
+async def download_combustivel(params: Params):
     try:
 
         data = get_dados(params.url)
@@ -79,9 +75,13 @@ async def download_cumbustivel(params: Params):
 
         return {"Status": "OK", "Bucket_name": params.bucket_name, "url": params.url}
     except Exception as ex:
-        raise HTTPException(status_code=ex.code, detail=f"{ex}")
+        return {'message':ex}
+        # raise HTTPException(status_code=ex.code, detail=f"{ex}")
 
 
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8080)
 
 
 

@@ -32,7 +32,7 @@ module "bigquery-dataset-gasolina" {
   ]
   tables=[
     {
-        table_id           = "tb_historico_combustivel_brasil",
+        table_id           = "tb_historico_combustivel_brasil2",
         description        = "Tabela com as informacoes de preço do combustível ao longo dos anos"
         time_partitioning  = {
           type                     = "DAY",
